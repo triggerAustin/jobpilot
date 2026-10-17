@@ -1,0 +1,52 @@
+{
+  "filter": {
+    "titleKeywords": [
+      "developer",
+      "engineer",
+      "programmer",
+      "frontend",
+      "front-end",
+      "front end",
+      "full stack",
+      "full-stack",
+      "fullstack",
+      "software",
+      "web",
+      "ui"
+    ],
+    "keywords": [
+      "javascript",
+      "typescript",
+      "node.js",
+      "nodejs",
+      "react",
+      "next.js",
+      "nextjs",
+      "vue",
+      "angular",
+      "frontend",
+      "front-end",
+      "front end",
+      "full stack",
+      "full-stack",
+      "fullstack"
+    ]
+  },
+  "sources": [
+    {
+      "id": "remotive",
+      "enabled": true,
+      "options": {
+        "category": "software-dev",
+        "search": "javascript"
+      }
+    },
+    {
+      "id": "remoteok",
+      "enabled": true,
+      "options": {
+        "tag": "javascript"
+      }
+    }
+  ]
+}

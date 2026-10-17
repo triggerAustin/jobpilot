@@ -1,0 +1,36 @@
+{
+  "aliases": {
+    "javascript": [
+      "js",
+      "ecmascript"
+    ],
+    "node.js": [
+      "node",
+      "nodejs"
+    ],
+    "next.js": [
+      "nextjs"
+    ],
+    "react": [
+      "reactjs",
+      "react.js"
+    ],
+    "express": [
+      "express.js",
+      "expressjs"
+    ],
+    "nestjs": [
+      "nest.js"
+    ],
+    "postgresql": [
+      "postgres"
+    ],
+    "mongodb": [
+      "mongo"
+    ],
+    "tailwind": [
+      "tailwindcss",
+      "tailwind css"
+    ]
+  }
+}

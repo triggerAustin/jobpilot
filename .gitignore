@@ -1,0 +1,21 @@
+# dependencies
+node_modules/
+
+# local database and generated applications (CVs, cover letters, answers)
+data/
+
+# secrets
+.env
+.env.*
+
+# logs
+*.log
+npm-debug.log*
+
+# editor and OS files
+.vscode/
+.idea/
+.DS_Store
+
+# personal details
+config/profile.json
