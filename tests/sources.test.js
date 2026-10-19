@@ -131,7 +131,13 @@ test("every source in sources.json is registered", () => {
 });
 
 test("location text from board and HN sources is a soft flag, not a hard one", () => {
-  const profile = loadJson("profile.json");
+  // Inline profile: the real one is personal, gitignored and differs per person.
+  const profile = {
+    experienceYears: 1,
+    workAuthorization: { canWorkIn: ["KE"] },
+    salary: { minimum: 2000 },
+    locationTerms: ["kenya", "africa", "emea", "worldwide", "anywhere"]
+  };
   for (const source of ["hackernews", "greenhouse", "lever", "ashby"]) {
     const res = checkEligibility(
       { source, title: "Developer", description: "", location: "Remote", remoteWorldwide: false },
