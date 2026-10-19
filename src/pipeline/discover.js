@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { buildAdapters } from "../sources/index.js";
 import { normalizeJob } from "../sources/base.js";
 import { openDb, insertJob } from "../db/db.js";
-import { sleep } from "../util.js";
+import { sleep, log } from "../util.js";
 
 function loadConfig() {
   const path = new URL("../../config/sources.json", import.meta.url);
@@ -44,6 +44,7 @@ export async function discover({ db = openDb(), config = loadConfig() } = {}) {
     };
 
     try {
+      log("discover", `(${i + 1}/${adapters.length}) ${adapter.id}: fetching`);
       const raws = await adapter.fetchJobs();
       stat.returned = raws.length;
       for (const raw of raws) {
@@ -60,8 +61,13 @@ export async function discover({ db = openDb(), config = loadConfig() } = {}) {
         if (inserted) stat.inserted++;
         else stat.duplicates++;
       }
+      log(
+        "discover",
+        `${adapter.id}: ${stat.inserted} new, ${stat.duplicates} duplicates, ${stat.filtered} filtered out, ${stat.invalid} invalid`
+      );
     } catch (err) {
       stat.error = err.message;
+      log("discover", `${adapter.id}: failed (${err.message})`);
     }
     summary.push(stat);
   }

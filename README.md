@@ -17,7 +17,7 @@ discover -> rank -> prep -> approve -> (you apply) -> applied
 
 | Command | What it does |
 |---|---|
-| `npm run discover` | Pulls listings from Remotive and RemoteOK, cleans and deduplicates them |
+| `npm run discover` | Pulls listings from every enabled source in `config/sources.json`, cleans and deduplicates them |
 | `npm run rank [n]` | Flags eligibility, scores skill match, shows the top n |
 | `npm run show <id>` | Prints URL, flags, missing skills and file paths for one job |
 | `npm run prep [n]` | Generates CV, cover letter and draft answers for the top n eligible jobs |
@@ -69,7 +69,7 @@ src/
   config.js            JSON config loader
   util.js              fetch helper with retry on 429
   db/db.js             schema, inserts, listing
-  sources/             Remotive and RemoteOK adapters, normalization
+  sources/             one adapter per source, plus normalization
   pipeline/
     discover.js        fetch, normalize, filter, insert
     eligibility.js     hard and soft flags
@@ -95,7 +95,23 @@ Flags are surfaced, not used to delete jobs. Soft flags do not push a job down t
 
 ## Sources and terms
 
-Discovery uses the public Remotive and RemoteOK APIs. Check each site's terms for attribution requirements and request limits, and avoid running `discover` more than a few times a day. Career-page scraping is not implemented.
+Enabled sources are listed in `config/sources.json`. Set `"enabled": false` to turn one off.
+
+| Source | Type | Notes |
+|---|---|---|
+| Remotive, RemoteOK, Jobicy | public JSON API | original sources |
+| Himalayas | public JSON API | structured location restrictions and salary; `maxPages` limits paging |
+| Working Nomads | public JSON feed | `category` option, for example `Development` |
+| We Work Remotely | RSS | `feeds` option lists category slugs |
+| Arbeitnow | public JSON API | mostly European employers; disabled by default |
+| Hacker News | Algolia API | latest "Who is hiring?" thread; `months` option; remote posts only |
+| Greenhouse, Ashby, Lever | official company-board APIs | add companies under `options.boards` as `{ "id": "<slug>", "name": "<Company>" }`; a wrong slug is logged and skipped |
+
+Check each site's terms for attribution requirements and request limits, and avoid running `discover` more than a few times a day. HTML career-page scraping is not implemented; the company-board adapters use the platforms' official public APIs.
+
+Location text from Hacker News and the company boards is free text, so it raises the soft `location_check` flag instead of the hard `location_restricted` flag.
+
+Each adapter prints progress lines such as `[himalayas] page 2/5` while `discover` runs.
 
 ## Status
 

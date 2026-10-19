@@ -3,6 +3,8 @@ const US_ONLY =
 const ON_SITE = /\b(relocation required|must relocate|on-?site (only|required))\b/;
 const SENIOR_TITLE = /\b(senior|sr|lead|principal|staff|head of|architect)\b/i;
 export const SOFT_FLAGS = new Set(["location_check"]);
+// Sources whose location field is an office city or free text, not a candidate restriction.
+const SOFT_LOCATION_SOURCES = new Set(["remoteok", "hackernews", "greenhouse", "lever", "ashby"]);
 const YEARS =
   /(\d+)\+?\s*years?\s+(of\s+)?(professional\s+|relevant\s+|commercial\s+|work\s+)?experience/g;
 
@@ -29,8 +31,8 @@ export function checkEligibility(job, profile) {
   if (job.location && !job.remoteWorldwide) {
     const loc = job.location.toLowerCase();
     if (!profile.locationTerms.some((t) => loc.includes(t))) {
-      // RemoteOK locations are usually office cities, not candidate restrictions.
-      flags.push(job.source === "remoteok" ? "location_check" : "location_restricted");
+      // Some sources give office cities or free text, not candidate restrictions.
+      flags.push(SOFT_LOCATION_SOURCES.has(job.source) ? "location_check" : "location_restricted");
     }
   }
 

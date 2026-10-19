@@ -47,6 +47,97 @@
       "options": {
         "tag": "javascript"
       }
+    },
+    {
+      "id": "jobicy",
+      "enabled": true,
+      "options": {
+        "tag": "javascript",
+        "count": 100
+      }
+    },
+    {
+      "id": "himalayas",
+      "enabled": true,
+      "options": {
+        "maxPages": 5,
+        "search": "react"
+      }
+    },
+    {
+      "id": "workingnomads",
+      "enabled": true,
+      "options": {
+        "category": "Development"
+      }
+    },
+    {
+      "id": "weworkremotely",
+      "enabled": true,
+      "options": {
+        "feeds": [
+          "remote-programming-jobs",
+          "remote-full-stack-programming-jobs",
+          "remote-front-end-programming-jobs"
+        ]
+      }
+    },
+    {
+      "id": "arbeitnow",
+      "enabled": false,
+      "options": {
+        "maxPages": 3,
+        "remoteOnly": true
+      }
+    },
+    {
+      "id": "hackernews",
+      "enabled": true,
+      "options": {
+        "months": 1
+      }
+    },
+    {
+      "id": "greenhouse",
+      "enabled": true,
+      "options": {
+        "remoteOnly": true,
+        "boards": [
+          {
+            "id": "gitlab",
+            "name": "GitLab"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ashby",
+      "enabled": true,
+      "options": {
+        "remoteOnly": true,
+        "boards": [
+          {
+            "id": "zapier",
+            "name": "Zapier"
+          },
+          {
+            "id": "deel",
+            "name": "Deel"
+          },
+          {
+            "id": "supabase",
+            "name": "Supabase"
+          }
+        ]
+      }
+    },
+    {
+      "id": "lever",
+      "enabled": false,
+      "options": {
+        "remoteOnly": true,
+        "boards": []
+      }
     }
   ]
 }

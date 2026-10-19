@@ -3,6 +3,9 @@ import { discover } from "./pipeline/discover.js";
 import { rankAll } from "./pipeline/rank.js";
 import { prepare, approve, show, markApplied } from "./pipeline/prepare.js";
 import { openDb, listApplications } from "./db/db.js";
+import dns from "node:dns";
+
+dns.setDefaultResultOrder("ipv4first");
 
 const [cmd, ...args] = process.argv.slice(2);
 
