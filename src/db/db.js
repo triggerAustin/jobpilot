@@ -1,6 +1,7 @@
 import Database from "better-sqlite3";
 import { mkdirSync } from "node:fs";
-import { dirname } from "node:path";
+import { dirname, join } from "node:path";
+import { dataDir } from "../config.js";
 
 const SCHEMA = `
 CREATE TABLE IF NOT EXISTS applications (
@@ -45,7 +46,7 @@ CREATE TABLE IF NOT EXISTS drafts (
 );
 `;
 
-export function openDb(path = process.env.JOBPILOT_DB ?? "data/jobpilot.db") {
+export function openDb(path = process.env.JOBPILOT_DB ?? join(dataDir(), "jobpilot.db")) {
   if (path !== ":memory:") mkdirSync(dirname(path), { recursive: true });
   const db = new Database(path);
   db.pragma("journal_mode = WAL");

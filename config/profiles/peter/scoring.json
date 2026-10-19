@@ -1,0 +1,35 @@
+{
+  "aliases": {
+    "project planning": ["project plan", "project plans", "planning and implementation"],
+    "project management": [
+      "project manager",
+      "project coordinator",
+      "project coordination",
+      "project officer",
+      "programme management",
+      "program management",
+      "programme officer",
+      "programme coordinator",
+      "program coordinator"
+    ],
+    "work plans": ["work plan", "workplan", "workplans"],
+    "scheduling": ["schedules", "schedule"],
+    "monitoring and evaluation": [
+      "m&e",
+      "m & e",
+      "monitoring & evaluation",
+      "monitoring, evaluation",
+      "monitoring and evaluation (m&e)",
+      "monitoring, evaluation and learning"
+    ],
+    "report writing": ["progress reports", "report preparation", "reporting skills", "report-writing"],
+    "budgeting": ["budget", "budgets", "budget management", "budget monitoring"],
+    "cost control": ["cost management", "cost monitoring"],
+    "data entry": ["data collection", "data capture", "records management"],
+    "stakeholder engagement": ["stakeholder management", "stakeholders"],
+    "teamwork": ["team work", "team player", "collaboration"],
+    "microsoft word": ["ms word", "ms office", "microsoft office"],
+    "microsoft excel": ["ms excel", "excel"],
+    "microsoft powerpoint": ["ms powerpoint", "powerpoint"]
+  }
+}

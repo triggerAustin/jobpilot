@@ -1,13 +1,28 @@
 #!/usr/bin/env node
+import dns from "node:dns";
 import { discover } from "./pipeline/discover.js";
 import { rankAll } from "./pipeline/rank.js";
 import { prepare, approve, show, markApplied } from "./pipeline/prepare.js";
 import { openDb, listApplications } from "./db/db.js";
-import dns from "node:dns";
+import { activeProfile } from "./config.js";
 
+// Prefer IPv4 first: some networks time out on IPv6 before Node falls back.
 dns.setDefaultResultOrder("ipv4first");
 
-const [cmd, ...args] = process.argv.slice(2);
+// `--profile <name>` selects a profile (same as JOBPILOT_PROFILE=<name>).
+const argv = process.argv.slice(2);
+const pi = argv.indexOf("--profile");
+if (pi >= 0) {
+  const name = argv[pi + 1];
+  if (!name || name.startsWith("--")) {
+    console.error("--profile needs a name, for example: --profile peter");
+    process.exit(1);
+  }
+  process.env.JOBPILOT_PROFILE = name;
+  argv.splice(pi, 2);
+}
+const [cmd, ...args] = argv;
+if (activeProfile()) console.log(`[jobpilot] profile: ${activeProfile()}`);
 
 function run(fn) {
   try {
@@ -22,9 +37,18 @@ switch (cmd) {
   case "discover":
     await discover();
     break;
-  case "rank":
-    rankAll({ limit: Number(args[0]) || 25 });
+  case "rank": {
+    // `rank 20` shows the top 20; `rank 21-40` shows ranks 21 to 40.
+    const m = /^(\d+)-(\d+)$/.exec(args[0] ?? "");
+    if (m) {
+      const from = Math.max(Number(m[1]), 1);
+      const to = Math.max(Number(m[2]), from);
+      rankAll({ offset: from - 1, limit: to - from + 1 });
+    } else {
+      rankAll({ limit: Number(args[0]) || 25 });
+    }
     break;
+  }
   case "show":
     run(() => show({ id: Number(args[0]) }));
     break;
@@ -43,5 +67,5 @@ switch (cmd) {
     console.table(listApplications(openDb(), Number(args[0]) || 50));
     break;
   default:
-    console.log("Usage: jobpilot <discover|rank|show|prep|approve|applied|list>");
+    console.log("Usage: jobpilot [--profile <name>] <discover|rank|show|prep|approve|applied|list>");
 }

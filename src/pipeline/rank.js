@@ -1,14 +1,12 @@
-import { readFileSync } from "node:fs";
 import { openDb } from "../db/db.js";
 import { checkEligibility, SOFT_FLAGS } from "./eligibility.js";
 import { scoreJob } from "./score.js";
-
-const loadJson = (name) =>
-  JSON.parse(readFileSync(new URL(`../../config/${name}`, import.meta.url), "utf8"));
+import { loadJson } from "../config.js";
 
 export function rankAll({
   db = openDb(),
   limit = 25,
+  offset = 0,
   profile = loadJson("profile.json"),
   scoring = loadJson("scoring.json")
 } = {}) {
@@ -66,8 +64,9 @@ export function rankAll({
       return { ...r, flagList, hard: flagList.filter((f) => !SOFT_FLAGS.has(f)).length };
     })
     .sort((a, b) => a.hard - b.hard || b.score - a.score || b.remote - a.remote)
-    .slice(0, limit)
-    .map((r) => ({
+    .slice(offset, offset + limit)
+    .map((r, i) => ({
+      rank: offset + i + 1,
       id: r.id,
       company: r.company,
       title: r.title,
@@ -77,7 +76,7 @@ export function rankAll({
       flags: r.flagList.join(", ")
     }));
 
-  console.log(`Ranked ${rows.length} jobs. Showing top ${top.length}.`);
+  console.log(`Ranked ${rows.length} jobs. Showing ${offset + 1}-${offset + top.length}.`);
   console.table(top);
   return top;
 }

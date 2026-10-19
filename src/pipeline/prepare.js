@@ -3,7 +3,7 @@ import { join, dirname } from "node:path";
 import { openDb } from "../db/db.js";
 import { SOFT_FLAGS } from "./eligibility.js";
 import { renderCvHtml, renderCoverLetter } from "./templates.js";
-import { loadJson } from "../config.js";
+import { loadJson, dataDir } from "../config.js";
 
 const slug = (s) =>
   s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40);
@@ -50,7 +50,7 @@ export function prepare({
     const job = { company: row.company, title: row.job_title };
     const opts = { matchedSkills: matched, aliases: scoring.aliases };
 
-    const dir = join("data", "output", `${slug(row.company)}-${slug(row.job_title)}-${date}`);
+    const dir = join(dataDir(), "output", `${slug(row.company)}-${slug(row.job_title)}-${date}`);
     mkdirSync(dir, { recursive: true });
 
     const cvPath = join(dir, "cv.html");

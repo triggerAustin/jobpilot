@@ -7,6 +7,7 @@ import { ArbeitnowSource } from "./arbeitnow.js";
 import { WeWorkRemotelySource } from "./weworkremotely.js";
 import { HackerNewsSource } from "./hackernews.js";
 import { GreenhouseSource, LeverSource, AshbySource } from "./boards.js";
+import { ReliefWebSource } from "./reliefweb.js";
 
 const REGISTRY = {
   remotive: RemotiveSource,
@@ -19,7 +20,8 @@ const REGISTRY = {
   hackernews: HackerNewsSource,
   greenhouse: GreenhouseSource,
   lever: LeverSource,
-  ashby: AshbySource
+  ashby: AshbySource,
+  reliefweb: ReliefWebSource
 };
 
 export function buildAdapters(config) {

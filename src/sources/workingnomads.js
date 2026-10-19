@@ -28,16 +28,22 @@ export class WorkingNomadsSource extends JobSource {
   async fetchJobs() {
     log(this.id, "fetching feed");
     const data = await fetchJson("https://www.workingnomads.com/api/exposed_jobs/");
-    const wanted = this.options.category?.toLowerCase();
+    // options.category may be one name or a list of names.
+    const wanted = [].concat(this.options.category ?? []).map((c) => c.toLowerCase());
+    const all = Array.isArray(data) ? data : [];
 
-    const rows = (Array.isArray(data) ? data : []).filter(
+    const rows = all.filter(
       (j) =>
         j.url &&
         j.title &&
         !j.expired &&
-        (!wanted || (j.category_name ?? "").toLowerCase() === wanted)
+        (wanted.length === 0 || wanted.includes((j.category_name ?? "").toLowerCase()))
     );
     log(this.id, `${rows.length} listings after category/expiry filter`);
+    if (rows.length === 0 && wanted.length > 0) {
+      const seen = [...new Set(all.map((j) => j.category_name).filter(Boolean))];
+      log(this.id, `no category matched; categories in the feed: ${seen.join(", ")}`);
+    }
     return rows.map((j) => mapJob(j, this.id));
   }
 }

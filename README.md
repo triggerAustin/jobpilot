@@ -113,6 +113,21 @@ Location text from Hacker News and the company boards is free text, so it raises
 
 Each adapter prints progress lines such as `[himalayas] page 2/5` while `discover` runs.
 
+## More than one person
+
+Each person gets a folder under `config/profiles/<name>/` with their own `profile.json`, `sources.json` and `scoring.json`, and their own database and output under `data/<name>/`. Select one with `--profile <name>` or the `JOBPILOT_PROFILE` environment variable:
+
+```bash
+npm run discover -- --profile peter
+npm run rank -- --profile peter
+```
+
+`profile.json` never falls back to another person's file. Profile folders are gitignored for `profile.json` because they hold contact details.
+
+Useful optional profile fields: `sectionOrder`, `sectionTitles`, `hobbies`, `referees`, `localTerms` (places the candidate can commute to), `juniorBoost` (points added to entry-level postings) and `letterHighlight`.
+
+ReliefWeb (NGO and programme jobs, filtered by country and experience) needs an app name: put it in `options.appname` or set `RELIEFWEB_APPNAME`, then set `"enabled": true`.
+
 ## Status
 
 - Done: discovery, eligibility, scoring, document preparation, approval gate, status tracking

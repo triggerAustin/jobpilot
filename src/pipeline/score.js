@@ -13,13 +13,17 @@ export function scoreJob(job, profile, aliases = {}) {
   const text = `${job.title} ${job.description}`;
   const matched = profile.skills.filter((s) => skillRegex(s, aliases).test(text));
 
+  const junior = isJuniorFriendly(text);
+  const bonus = junior && profile.juniorBoost ? profile.juniorBoost : 0;
+  const share = Math.round((matched.length / profile.skills.length) * 100);
+
   return {
-    score: Math.round((matched.length / profile.skills.length) * 100),
+    score: Math.min(100, share + bonus),
     matchedSkills: matched,
     missingSkills: profile.skills.filter((s) => !matched.includes(s)),
     signals: {
       remoteWorldwide: Boolean(job.remoteWorldwide),
-      juniorFriendly: isJuniorFriendly(text)
+      juniorFriendly: junior
     }
   };
 }

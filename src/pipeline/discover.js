@@ -1,13 +1,8 @@
-import { readFileSync } from "node:fs";
 import { buildAdapters } from "../sources/index.js";
 import { normalizeJob } from "../sources/base.js";
 import { openDb, insertJob } from "../db/db.js";
 import { sleep, log } from "../util.js";
-
-function loadConfig() {
-  const path = new URL("../../config/sources.json", import.meta.url);
-  return JSON.parse(readFileSync(path, "utf8"));
-}
+import { loadJson } from "../config.js";
 
 const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
@@ -25,7 +20,7 @@ export function buildKeywordFilter(keywords = [], titleKeywords = []) {
   };
 }
 
-export async function discover({ db = openDb(), config = loadConfig() } = {}) {
+export async function discover({ db = openDb(), config = loadJson("sources.json") } = {}) {
   const adapters = buildAdapters(config);
   const isRelevant = buildKeywordFilter(config.filter?.keywords, config.filter?.titleKeywords);
   const summary = [];

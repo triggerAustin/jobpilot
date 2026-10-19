@@ -1,0 +1,45 @@
+{
+  "filter": {
+    "titleKeywords": [
+      "project", "projects", "programme", "program", "monitoring", "evaluation", "m&e",
+      "coordinator", "coordination", "officer", "assistant", "associate", "administrator",
+      "administrative", "planning", "operations", "research", "data entry",
+      "intern", "internship", "trainee", "graduate"
+    ],
+    "keywords": [
+      "project planning", "project management", "project coordination",
+      "monitoring and evaluation", "m&e", "programme", "program", "budgeting", "budget",
+      "reporting", "report writing", "data entry", "data collection", "stakeholder",
+      "work plan", "workplan", "cooperative", "ngo",
+      "internship", "intern", "graduate", "trainee", "entry level", "entry-level", "junior"
+    ]
+  },
+  "sources": [
+    {
+      "id": "reliefweb",
+      "enabled": false,
+      "options": {
+        "appname": "",
+        "country": "Kenya",
+        "experience": ["0-2 years"],
+        "limit": 100
+      }
+    },
+    { "id": "himalayas", "enabled": true, "options": { "search": "project coordinator", "maxPages": 2 } },
+    { "id": "himalayas", "enabled": true, "options": { "search": "monitoring and evaluation", "maxPages": 2 } },
+    { "id": "himalayas", "enabled": true, "options": { "search": "intern", "maxPages": 2 } },
+    { "id": "remotive", "enabled": true, "options": { "search": "project" } },
+    { "id": "remoteok", "enabled": true, "options": { "tag": "project-manager" } },
+    { "id": "jobicy", "enabled": true, "options": { "tag": "project", "count": 50 } },
+    {
+      "id": "workingnomads",
+      "enabled": true,
+      "options": { "category": ["Management", "Administrative"] }
+    },
+    {
+      "id": "weworkremotely",
+      "enabled": true,
+      "options": { "feeds": ["remote-management-and-finance-jobs", "remote-all-other-remote-jobs"] }
+    }
+  ]
+}
